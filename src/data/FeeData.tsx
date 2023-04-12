@@ -1,4 +1,4 @@
-export const data = {
+export const data:any = {
     "Exam Fee":{
         "INDIAN":{
             "ALL_COURSES​":{
