@@ -14,7 +14,7 @@ interface Props  {
 
 
 interface AppProps extends Props {
-  handleCourse : ()=>void,
+  handleCourse ?: ()=>void,
 }
 
 

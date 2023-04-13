@@ -11,7 +11,7 @@ interface Props  {
 }
 
 interface AppProps extends Props {
-  handleNationality : ()=>void
+  handleNationality? : ()=>void
 }
 
 export const NationalityForm:FC<AppProps> = ({setState,state}) => {

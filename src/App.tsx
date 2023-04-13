@@ -12,14 +12,10 @@ import { LevelForm } from './components/LevelForm';
 import { ResultForm } from './components/ResultForm';
 
 
-interface AppProps{
-  handleFeeType : ()=>void,
-  handleNationality : ()=>void,
-  handleCourse : ()=>void,
-  handleLevel: ()=>void
-}
 
-const App:FC<AppProps> = ():JSX.Element=> {
+
+
+export default function App():JSX.Element {
 
 
   const [state,setState] = useState<StateType>({feeType:null,nationality:null,course:null,level:null,totalFee:0});
@@ -48,19 +44,6 @@ const App:FC<AppProps> = ():JSX.Element=> {
   }, [state.level, state.feeType, state.nationality, state.course]);
 
 
-
-
-
-
-
-
- 
-
-
-
-
-
-
   return (
    <div className='w-screen h-screen flex '>
 
@@ -84,4 +67,3 @@ const App:FC<AppProps> = ():JSX.Element=> {
   )
 }
 
-export default App

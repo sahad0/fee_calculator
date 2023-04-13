@@ -13,7 +13,7 @@ interface Props  {
 }
 
 interface AppProps extends Props{
-  handleFeeType : ()=>void
+  handleFeeType? : ()=>void
 }
 
 

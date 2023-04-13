@@ -12,7 +12,7 @@ interface Props  {
 }
 
 interface AppProps extends Props {
-  handleLevel:()=>void,
+  handleLevel?:()=>void,
 }
 
 export const LevelForm:FC<AppProps> = ({setState,state,levels}) => {
