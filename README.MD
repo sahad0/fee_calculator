@@ -1,4 +1,5 @@
-Selection Form with Framer Motion
+# Selection Form with Framer Motion
+
 This is a simple Vite React app that demonstrates how to use Framer Motion to create a selection form with animated transitions. The app allows the user to select different options and displays the final output once all selection boxes have been filled.
 
 Getting Started
