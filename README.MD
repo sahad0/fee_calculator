@@ -11,6 +11,11 @@ Run the following commands:
 bash
 Clone the repo code
 
+
+
+The deployed site can be found here :- https://master--enchanting-piroshki-d6125e.netlify.app/
+
+
 # Install dependencies
 ```yarn```
 
@@ -30,6 +35,15 @@ This app was built using the following technologies:
 Vite
 React
 Framer Motion
+
+
+
+
+
+
+
+![Peek 2023-04-13 12-44](https://user-images.githubusercontent.com/88948601/231682833-e3ea764c-0204-4814-b99f-b27e88a312e5.gif)
+
 
 
 
