@@ -5,6 +5,11 @@ import { data } from './data/FeeData';
 import Typewriter from './extras/TypeWriter';
 import {AnimatePresence, motion} from 'framer-motion'
 import { animationVarientX, animationVarients, animationVarients1 } from './extras/animation/animation';
+import { FeeTypeForm } from './components/FeeTypeForm';
+import { NationalityForm } from './components/NationalityForm';
+import { CourseForm } from './components/CourseForm';
+import { LevelForm } from './components/LevelForm';
+import { ResultForm } from './components/ResultForm';
 
 
 interface AppProps{
@@ -18,6 +23,7 @@ const App:FC<AppProps> = ():JSX.Element=> {
 
 
   const [state,setState] = useState<StateType>({feeType:null,nationality:null,course:null,level:null,totalFee:0});
+  const [loading,setLoading] = useState<boolean>(false);
 
 
   
@@ -27,32 +33,30 @@ const App:FC<AppProps> = ():JSX.Element=> {
 
 
   useEffect(() => {
+    let x:any ;
     if (state.level !== null && state.feeType && state.nationality && state.course) {
+      setLoading(true);
       setState({...state,totalFee:data?.[state.feeType]?.[state.nationality]?.[state.course]?.[state.level]?.amount});
+
+      x = setTimeout(()=>{
+          setLoading(false);
+      },4000);
     }
+
+    return ()=>clearInterval(x);
+
   }, [state.level, state.feeType, state.nationality, state.course]);
 
 
 
 
-  const handleFeeType = (val:FeeType)=>{
-      setState({...state,feeType:val});
-  }
 
-  const handleNationality = (val:NationalityType)=>{
-    setState({...state,nationality:val});
 
-  }
 
-  const handleCourse = (val:CourseType)=>{
-    setState({...state,course:val});
 
-  }
+ 
 
-  const handleLevel = (val:LevelType)=>{
-    setState({...state,level:val});
 
-  }
 
 
 
@@ -61,119 +65,18 @@ const App:FC<AppProps> = ():JSX.Element=> {
    <div className='w-screen h-screen flex '>
 
     <div className='mt-60 ml-5 sm:ml-7 md:ml-15 lg:ml-60'>
-    <AnimatePresence>
-    {
-      state.feeType===null && (
-          <motion.div key="modal" variants={animationVarientX} initial="initial" animate="animate" exit="exit"  transition={{duration:1}}>
-              <Typewriter text='What do you have to pay for?'/>
-            {/* FORM1 */}
-              <motion.div variants={animationVarients} initial="initial" animate="animate"  transition={{delay:3,duration:1}} className='relative mt-44  '>
-              
-                <select className='block appearance-none w-80 lg:w-[700px] bg-gray-800 border border-gray-600 text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-gray-700 focus:border-gray-500' onChange={(e)=>handleFeeType(e.target.value as FeeType)}>
-                  <option value="null">-- Select FeeType --</option>
-      
-                  {Object.keys(data).map((fee) => (
-                    
-                    <option key={fee} value={fee}>
-                      {fee}
-                    </option>
-                  ))}
-                </select>
-      
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-600">
-                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M14.707 7.293a1 1 0 00-1.414 0L10 10.586 6.707 7.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 000-1.414z"/></svg>
-              </div>
-      
-              </motion.div>
-          </motion.div>
-        )
-    }
-</AnimatePresence>
-        
-        {/* FORM2 */}
-      <AnimatePresence>
-        {
-          state.feeType!==null && state.nationality===null && (
-            <motion.div key="modal1" variants={animationVarientX} initial="initial" animate="animate" exit="exit"  transition={{duration:1,delay:1}}>
-              <motion.div variants={animationVarients1} initial="initial" animate="animate" transition={{duration:1,delay:1}}>
-                  <motion.span className='text-[30px]' style={{fontFamily:"'Barlow', sans-serif"}}  >
-                  {'Pick your Nationality?'}
-                  </motion.span>
-              </motion.div>
-              <motion.div variants={animationVarients1} initial="initial" animate="animate"  transition={{delay:1,duration:2}} className='relative mt-28  '>
 
-                <select className='block appearance-none w-80 lg:w-[700px] bg-gray-800 border border-gray-600 text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-gray-700 focus:border-gray-500' onChange={(e)=>handleNationality(e.target.value as NationalityType)}>
-                  <option value="null">-- Select Nationality --</option>
-                  {state.feeType!==null&& Object.keys(data?.[state.feeType]).map((nationality) => (
-                    <option value={nationality} key={nationality}>
-                      {nationality}
-                    </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-600">
-                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M14.707 7.293a1 1 0 00-1.414 0L10 10.586 6.707 7.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 000-1.414z"/></svg>
-              </div>
-                </motion.div>
-            </motion.div>
-          )
-        }
-        </AnimatePresence>
+        <FeeTypeForm state={state} setState={setState}  />    
 
-        {/* FORM3 */}
+        <NationalityForm setState={setState} state={state} />
+     
+        <CourseForm courses={courses} state={state}  setState={setState} />
 
-        {
-          
-          state.nationality!==null  && state.course===null && (
-            <label>
-            Select Course:
-            <select  onChange={(e)=>handleCourse(e.target.value as CourseType) }>
-              <option value="null">-- Select Course --</option>
-              {courses.map((course) => (
-                <option key={course} value={Object.keys(data?.[state.feeType?state.feeType:'']?.[state.nationality ? state.nationality:'']).map((k)=>k)[0]}>
-                  {course}
-                </option>
-              ))}
-            </select>
-          </label>
-          )
-        }
+        <LevelForm levels={levels} setState={setState} state={state} />
 
+       
+        <ResultForm state={state} loading={loading}/>
 
-        {/* FORM4 */}
-
-        {/* {
-          state.feeType!==null && state.nationality!==null && state.course!==null &&(
-            <label>
-            Select Level:
-            <select  onChange={(e)=>handleLevel(e.target.value as LevelType)}>
-              <option value="null">-- Select Level --</option>
-              {Object.keys(data[state.feeType][state.nationality][state.course]).length>1 ? 
-               Object.keys(data[state.feeType][state.nationality][state.course]).map(
-                (level) => (
-                  <option key={level} value={level}>
-                    {level}
-                  </option>
-                )
-              )
-            :
-            levels.map((k)=>(
-              <option key={k} value={Object.keys(data?.[state.feeType ? state.feeType:''][state.nationality ? state.nationality : ''][state.course ? state.course : ''])}>
-                {k}
-              </option>
-            ))
-            
-           
-            }
-            </select>
-          </label>
-          )
-
-
-        } */}
-
-        {/* <div>{state.totalFee!==null && state.totalFee}</div> */}
-
- 
 
     </div>
 

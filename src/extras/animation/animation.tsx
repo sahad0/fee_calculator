@@ -1,7 +1,7 @@
 export const animationVarientX = {
     initial: { opacity: 1 ,x:0 },
     animate: { opacity: 1 ,x:0 },
-    exit :   {opacity :0,x:-1000}
+    exit :   {opacity :0,x:0}
   };
 export const animationVarients = {
     initial: { opacity: 0 ,y:0 },
